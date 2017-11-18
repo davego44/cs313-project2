@@ -1,9 +1,10 @@
 const {Pool} = require('pg');
 
-const connectionString = "postgres://project2user:password@localhost:5432/postgres";
+//const connectionString = "postgres://project2user:password@localhost:5432/postgres";
 
 const pool = new Pool({
-	connectionString : connectionString,
+	connectionString : process.env.DATABASE_URL,
+	ssl: true,
 });
 
 module.exports = {
