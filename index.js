@@ -18,6 +18,11 @@ const tutorials = require('./tutorialsRouting.js');
 const products = require('./productsRouting.js');
 
 /***************************************************
+	Routing: Overall
+****************************************************/
+const overall = require('./overallRouting.js');
+
+/***************************************************
 	Express
 ****************************************************/
 express()
@@ -25,6 +30,7 @@ express()
   .use('/posts', posts.getRouter())
   .use('/tutorials', tutorials.getRouter())
   .use('/products', products.getRouter())
+  .use('/overall', overall.getRouter())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))

@@ -7,6 +7,7 @@ exports.getRouter = function() {
 	//get
 	productsRouter.get('/', getEntireCollection); //get entire collection
 	productsRouter.get('/:id', getSingleEntry); //get a single entry
+	//productsRouter.get('/recent', getRecentEntries); //get 2 recent entries
 	//put
 	productsRouter.put('/:id/:title/:description/:cost/:count', replaceEntry); //replace (or create) a single entry
 	//patch
@@ -18,13 +19,12 @@ exports.getRouter = function() {
 	return productsRouter;
 }
 	
-function getEntireCollection(req, res) {
+function getEntireCollection(req, response) {
 	db.query('SELECT * FROM project2.product', [], (err, res) => {
 		if (err)
 			throw err;
-		console.log(res.rows);
+		response.json(res.rows);
 	});
-	res.end();
 }
 
 function getSingleEntry(req, res) {
@@ -35,6 +35,14 @@ function getSingleEntry(req, res) {
 	});
 	res.end();
 }
+
+/*function getRecentEntries(req, response) {
+	db.query('SELECT * FROM project2.product ORDER BY posted DESC LIMIT 2', [], (err, res) => {
+		if (err)
+			throw err;
+		response.json(res.rows);
+	});
+}*/
 
 function replaceEntry(req, res) {
 	db.query("INSERT INTO project2.product (id, title, description, cost, count) " + 

@@ -8,6 +8,7 @@ exports.getRouter = function() {
 	postsRouter.get('/', getEntireCollection); //get entire collection
 	postsRouter.get('/:id', getSingleEntry); //get a single entry
 	postsRouter.get('/keywords/:keywords', getEntriesByKeyword); //get entries by keywords
+	//postsRouter.get('/recent', getRecentEntries); //get 2 recent entries
 	//put
 	postsRouter.put('/:id/:title/:author_id/:content', replaceEntry); //replace (or create) a single entry
 	//patch
@@ -19,13 +20,12 @@ exports.getRouter = function() {
 	return postsRouter;
 }
 	
-function getEntireCollection(req, res) {
+function getEntireCollection(req, response) {
 	db.query('SELECT * FROM project2.blog', [], (err, res) => {
 		if (err)
 			throw err;
-		console.log(res.rows);
+		response.json(res.rows);
 	});
-	res.end();
 }
 
 function getSingleEntry(req, res) {
@@ -51,6 +51,14 @@ function getEntriesByKeyword(req, res) {
 	});
 	res.end();
 }
+
+/*function getRecentEntries(req, response) {
+	db.query('SELECT * FROM project2.blog ORDER BY posted DESC LIMIT 2', [], (err, res) => {
+		if (err)
+			throw err;
+		response.json(res.rows);
+	});
+}*/
 
 function replaceEntry(req, res) {
 	db.query("INSERT INTO project2.blog (id, title, author_id, content) " + 

@@ -2,6 +2,9 @@
 <html>
 <head>
   <% include ../partials/header.ejs %>
+  
+  <script src="./main.js"></script>
+  
 </head>
 
 <body>
@@ -9,58 +12,88 @@
   <% include ../partials/nav.ejs %>
 
 <div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="/lang-logo.png">
-    </a>
-    <h1>Getting Started with Node on Heroku</h1>
-    <p>This is a sample Node application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Getting Started with Node</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
-</div>
-<div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs" class="alert-link">Getting Started with Node on Heroku</a> tutorial.
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/node-js-getting-started">Heroku Button</a> on the repository.</li>
-
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/node-js-getting-started/blob/master/package.json">package.json</a>, creating a deployable slug.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
+	<div class="container">
+		<h1>DIY Done Right</h1>
+		<p>Welcome to my website where I share my woodworking and decor thoughts, knowledge, and products with you! I'm Shannon Lobaccaro and these are my experiences.</p>
+		<form class="search-form">
+			<div class="form-group">
+				<div class="row nopadding">
+					<div class="col-md-8 nopadding">
+						<input type="text" class="form-control" placeholder="Search All">
+					</div>
+					<div class="col-md-4 nopadding">
+						<div class="input-group-btn">
+						  <button class="btn btn-primary" type="submit">
+							<span class="glyphicon glyphicon-search"></span> Search
+						  </button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
     </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
-        <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
-        <ul>
-          <li><code>git clone https://github.com/heroku/node-js-getting-started.git</code> - this will create a local copy of the source code for the app</li>
-          <li><code>cd node-js-getting-started</code> - change directory into the local source code repository</li>
-          <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the Heroku app with the repository</li>
-          <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes">deploy changes</a> to Heroku</li>
-        </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started with Node on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/deploying-nodejs">Deploying Node Apps on Heroku</a></li>
-      </ul>
-    </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div>
 </div>
-
-
+<div class="container nopadding">
+	<div class="row large-menu">
+		<div id="blog" class="col-md-4 large-menu-item lg-m-itm-1">
+			<div class="large-menu-item-inside">
+				<span class="glyphicon glyphicon-book glyphicon-lg"></span><br/>
+				Blog Posts<br/>
+				Come check out my thoughts and projects here on my blog posts!
+			</div>
+		</div>
+		<div id="tutorials" class="col-md-4 large-menu-item lg-m-itm-2">
+			<div class="large-menu-item-inside">
+				<span class="glyphicon glyphicon-info-sign glyphicon-lg"></span><br/>
+				Tutorials<br/>
+				Want to learn how to make some amazing projects? Here is your stop!
+			</div>
+		</div>
+		<div id="products" class="col-md-4 large-menu-item lg-m-itm-3">
+			<div class="large-menu-item-inside">
+				<span class="glyphicon glyphicon-tag glyphicon-lg"></span><br/>
+				Products<br/>
+				I sell the things that I create along with you guys! Come take a look!
+			</div>
+		</div>
+	</div>
+	<div class="container-main">
+		<div id="main-item-holder" class="container-main-item">
+		</div>
+	</div>
+	<div class="container-recent">
+		<div class="item">
+			<div class="item-title">
+				<h2>Recent Activity</h2>
+			</div>
+			<div id="recent-activity">
+			</div>
+		</div>
+	</div>
+	<div class="container-about">
+		<div class="item">
+			<div class="item-title">
+				<h2>About</h2>
+			</div>
+			<div class="item-pic-left">
+				<img src="../aboutpic.jpg" class="img-thumbnail"/>
+			</div>
+			<div class="item-text">
+				<p>Hello. My name is Shannon Lobaccaro and I love to create works of art using wood! Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+				Aliquam ut orci rutrum, iaculis metus eget, elementum orci. Praesent vestibulum velit in magna dignissim scelerisque nec ac diam. Ut vitae commodo leo, 
+				ut dictum augue. Cras varius ligula eget massa accumsan, eu laoreet sapien interdum. Fusce orci turpis, cursus et porttitor in, tincidunt ut massa. 
+				Proin rutrum, ex a lacinia porttitor, mi tortor posuere ligula, eu sollicitudin orci nisi porta magna. Curabitur mi lacus, viverra in nisl at, condimentum 
+				rutrum lectus. Fusce sagittis vel metus eu posuere. Morbi molestie pharetra eros, a vehicula tellus venenatis quis. Nam molestie eget lectus eget elementum.</p> 
+				Ut vehicula ut neque vel interdum. Phasellus quis nisl et magna luctus semper. Suspendisse id justo feugiat, pretium tellus a, pharetra ligula. In molestie 
+				enim sit amet interdum dapibus. Mauris non ligula scelerisque ex cursus iaculis id at nibh. Praesent cursus non justo id congue. Vestibulum ante ipsum primis 
+				in faucibus orci luctus et ultrices posuere cubilia Curae; Sed at velit mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac 
+				turpis egestas. Sed rutrum mattis felis, id facilisis metus facilisis eu. Pellentesque tortor diam, faucibus convallis odio a, blandit facilisis eros. Phasellus 
+				eleifend lobortis porttitor. Pellentesque eleifend malesuada libero vel luctus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis ut nisi at 
+				erat pulvinar convallis et non purus. Nam elementum ultrices nunc, ut cursus nibh interdum eu. Cras ut pellentesque eros, ut pulvinar ligula. Phasellus euismod 
+				faucibus magna, ut scelerisque ante scelerisque quis. In semper condimentum nibh.
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
