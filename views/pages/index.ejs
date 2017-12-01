@@ -10,54 +10,77 @@
 <body>
 
   <% include ../partials/nav.ejs %>
+  
+<div id="searchModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-<div class="jumbotron text-center">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Search Results</h4>
+      </div>
+      <div class="modal-body" id="modalBody">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  
+  <% include ../partials/signin.ejs %>
+
+<div class="jumbotron text-center" id="top">
 	<div class="container">
 		<h1>DIY Done Right</h1>
 		<p>Welcome to my website where I share my woodworking and decor thoughts, knowledge, and products with you! I'm Shannon Lobaccaro and these are my experiences.</p>
-		<form class="search-form">
+		<div class="search-form">
 			<div class="form-group">
 				<div class="row nopadding">
 					<div class="col-md-8 nopadding">
-						<input type="text" class="form-control" placeholder="Search All">
+						<input type="text" class="form-control" id="search-text" placeholder="Search All">
 					</div>
 					<div class="col-md-4 nopadding">
 						<div class="input-group-btn">
-						  <button class="btn btn-primary" type="submit">
+						  <button class="btn btn-primary" id="search-submit">
 							<span class="glyphicon glyphicon-search"></span> Search
 						  </button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form>
+		</div>
     </div>
 </div>
 <div class="container nopadding">
+	<div id="searchResults" class="container">
+	</div>
 	<div class="row large-menu">
 		<div id="blog" class="col-md-4 large-menu-item lg-m-itm-1">
-			<div class="large-menu-item-inside">
+			<div class="large-menu-item-inside center-child">
 				<span class="glyphicon glyphicon-book glyphicon-lg"></span><br/>
 				Blog Posts<br/>
 				Come check out my thoughts and projects here on my blog posts!
 			</div>
 		</div>
 		<div id="tutorials" class="col-md-4 large-menu-item lg-m-itm-2">
-			<div class="large-menu-item-inside">
+			<div class="large-menu-item-inside center-child">
 				<span class="glyphicon glyphicon-info-sign glyphicon-lg"></span><br/>
 				Tutorials<br/>
 				Want to learn how to make some amazing projects? Here is your stop!
 			</div>
 		</div>
 		<div id="products" class="col-md-4 large-menu-item lg-m-itm-3">
-			<div class="large-menu-item-inside">
+			<div class="large-menu-item-inside center-child">
 				<span class="glyphicon glyphicon-tag glyphicon-lg"></span><br/>
 				Products<br/>
 				I sell the things that I create along with you guys! Come take a look!
 			</div>
 		</div>
 	</div>
-	<div class="container-main">
+	<div class="container-main hide-item">
 		<div id="main-item-holder" class="container-main-item">
 		</div>
 	</div>

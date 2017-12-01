@@ -27,13 +27,12 @@ function getEntireCollection(req, response) {
 	});
 }
 
-function getSingleEntry(req, res) {
+function getSingleEntry(req, response) {
 	db.query('SELECT * FROM project2.product WHERE id = $1', [req.params.id], (err, res) => {
 		if (err)
 			throw err;
-		console.log(res.rows);
+		response.json(res.rows);
 	});
-	res.end();
 }
 
 /*function getRecentEntries(req, response) {

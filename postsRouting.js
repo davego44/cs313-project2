@@ -6,7 +6,7 @@ exports.getRouter = function() {
 	var postsRouter = express.Router();
 	//get
 	postsRouter.get('/', getEntireCollection); //get entire collection
-	postsRouter.get('/:id', getSingleEntry); //get a single entry
+	postsRouter.get('/:id', getSingleEntry); //get a single entry	
 	postsRouter.get('/keywords/:keywords', getEntriesByKeyword); //get entries by keywords
 	//postsRouter.get('/recent', getRecentEntries); //get 2 recent entries
 	//put
@@ -15,6 +15,7 @@ exports.getRouter = function() {
 	postsRouter.patch('/:id/:title/:author_id/:content', replaceEntry); //update a single entry
 	//post
 	postsRouter.post('/:id/:title/:author_id/:content', replaceEntry); //add an entry
+	postsRouter.post('/comment', addComment);
 	//delete
 	postsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
 	return postsRouter;
@@ -28,13 +29,17 @@ function getEntireCollection(req, response) {
 	});
 }
 
-function getSingleEntry(req, res) {
-	db.query('SELECT * FROM project2.blog WHERE id = $1', [req.params.id], (err, res) => {
-		if (err)
-			throw err;
-		console.log(res.rows);
+function getSingleEntry(req, response) {
+	db.query('SELECT * FROM project2.blog WHERE id = $1', [req.params.id], (errP, resP) => {
+		if (errP)
+			throw errP;
+		db.query('SELECT * FROM project2.comment WHERE blog_id = $1', [req.params.id], (errC, resC) => {
+			if (errC)
+				throw errC;
+			resP.rows[0].comments = resC.rows;
+			response.json(resP.rows);
+		});
 	});
-	res.end();
 }
 
 function getEntriesByKeyword(req, res) {
@@ -50,6 +55,19 @@ function getEntriesByKeyword(req, res) {
 		console.log(res.rows);
 	});
 	res.end();
+}
+
+function addComment(req, response) {
+	if (req.session.username) {
+		db.query('INSERT INTO project2.comment (blog_id, content, author_name) VALUES ($1, $2, $3)', 
+				 [req.body.id, req.body.comment, req.session.username], (err, res) => {
+			if (err)
+				throw err;
+			response.json({"success" : true, "status" : 200, "user" : req.session.username});
+		});
+	} else {
+		response.status(401).send({message: 'Must be signed in.'});
+	}
 }
 
 /*function getRecentEntries(req, response) {

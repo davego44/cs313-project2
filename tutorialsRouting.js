@@ -15,6 +15,7 @@ exports.getRouter = function() {
 	tutorialsRouter.patch('/:id/:title/:author_id/:content', replaceEntry); //update a single entry
 	//post
 	tutorialsRouter.post('/:id/:title/:author_id/:content', replaceEntry); //add an entry
+	tutorialsRouter.post('/diy', addDIY);
 	//delete
 	tutorialsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
 	return tutorialsRouter;
@@ -28,13 +29,17 @@ function getEntireCollection(req, response) {
 	});
 }
 
-function getSingleEntry(req, res) {
-	db.query('SELECT * FROM project2.tutorial WHERE id = $1', [req.params.id], (err, res) => {
-		if (err)
-			throw err;
-		console.log(res.rows);
+function getSingleEntry(req, response) {
+	db.query('SELECT * FROM project2.tutorial WHERE id = $1', [req.params.id], (errT, resT) => {
+		if (errT)
+			throw errT;
+		db.query('SELECT * FROM project2.diyupload WHERE tutorial_id = $1', [req.params.id], (errD, resD) => {
+			if (errD)
+				throw errD;
+			resT.rows[0].diys = resD.rows;
+			response.json(resT.rows);
+		});
 	});
-	res.end();
 }
 
 /*function getRecentEntries(req, response) {
@@ -58,6 +63,19 @@ function getEntriesByKeyword(req, res) {
 		console.log(res.rows);
 	});
 	res.end();
+}
+
+function addDIY(req, response) {
+	if (req.session.username) {
+		db.query('INSERT INTO project2.diyupload (tutorial_id, content, author_name) VALUES ($1, $2, $3)', 
+				 [req.body.id, req.body.tutorial, req.session.username], (err, res) => {
+			if (err)
+				throw err;
+			response.json({"success" : true, "status" : 200, "user" : req.session.username});
+		});
+	} else {
+		response.status(401).send({message: 'Must be signed in.'});
+	}
 }
 
 function replaceEntry(req, res) {
