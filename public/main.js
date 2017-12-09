@@ -195,7 +195,7 @@ $(function(){
 						.html('')
 						.append('<div class="main-item"><div class="main-item-content"><img class="item-img" src="' + data[0].img_name +
 								'"/><div class="main-item-title">' + data[0].title + '</div><div class="main-item-description">' + data[0].caption + ' ' + data[0].cost +
-								' ' + data[0].count + '</div><div class="main-item-content">' + data[0].content + '</div></div></div>')
+								' ' + data[0].count + '</div><div class="main-item-content">' + '</div></div></div>')
 						.append('<div class="container"><h3>I will not be implementing the product shop for this project (too much more)</h3></div>');
 					$('html, body').animate({ scrollTop: $('#products').offset().top}, 250, function() {
 						$('#main-item-holder').slideDown("fast");
@@ -302,6 +302,7 @@ $(function(){
 	function recentPostOnClick() {
 		var pid = $(this).attr('pid');
 		$.get('/posts/' + pid, function(data, status) {
+			$('#searchModal').modal('hide');
 			$('#main-item-holder').slideUp("fast", function () {
 				document.documentElement.style.setProperty('--current-lgt-color', '#ffedf0');
 				document.documentElement.style.setProperty('--current-med-color', '#F9CAD2');
@@ -336,6 +337,7 @@ $(function(){
 	function recentTutorialOnClick() {
 		var tid = $(this).attr('tid');
 		$.get('/tutorials/' + tid, function(data, status) {
+			$('#searchModal').modal('hide');
 			$('#main-item-holder').slideUp("fast", function () {
 				document.documentElement.style.setProperty('--current-lgt-color', '#e0e7fc');
 				document.documentElement.style.setProperty('--current-med-color', '#7081B7');
@@ -370,14 +372,15 @@ $(function(){
 	function recentProductOnClick() {
 		var pid = $(this).attr('pid');
 		$.get('/products/' + pid, function(data, status) {
+			$('#searchModal').modal('hide');
 			$('#main-item-holder').slideUp("fast", function () {
 				document.documentElement.style.setProperty('--current-lgt-color', '#fff7ef');
 				document.documentElement.style.setProperty('--current-med-color', '#F8E8D8');
 				$('#main-item-holder')
 					.html('')
 					.append('<div class="main-item"><div class="main-item-content"><img class="item-img" src="' + data[0].img_name +
-							'"/><div class="main-item-title">' + data[0].title + '</div><div class="main-item-description">' + data[0].caption + ' ' + data[0].cost +
-							' ' + data[0].count + '</div><div class="main-item-content">' + data[0].content + '</div></div></div>')
+							'"/><div class="main-item-title">' + data[0].title + '</div><div class="main-item-description">' + data[0].description + ' ' + data[0].cost +
+							' ' + data[0].count + '</div><div class="main-item-content">' + '</div></div></div>')
 					.append('<div class="container"><h3>I will not be implementing the product shop for this project (too much more)</h3></div>');
 				$('html, body').animate({ scrollTop: $('#products').offset().top}, 250, function() {
 					$('.container-main').show();
@@ -393,18 +396,30 @@ $(function(){
 		$('#modalBody').text('');
 		var search = $('#search-text').val();
 		if (search && search.length > 2) {
-			$.get('/overall/search/' + search, function(data, status) {
-				$.each(data, function(index, entry) {
-					if (entry.description) {
-						entry.caption = entry.description;
-					}
-					$('#modalBody').append('<div class="recent-item search-item" eid="' + entry.id + '"><div class="recent-item-title">' + entry.title + '</div>' +
-										       '<div class="recent-item-content">' + entry.caption + '</div></div>');
+			$.get('/overall/search/blog/' + search, function(dataB, statusB) {
+				$.get('/overall/search/tutorials/' + search, function(dataT, statusT) {
+					$.get('/overall/search/products/' + search, function(dataP, statusP) {
+						$.each(dataB, function(index, entry) {
+							$('#modalBody').append('<div class="recent-item search-item-1 recent-item-1" pid="' + entry.id + '"><div class="recent-item-title">' + entry.title + '</div>' +
+													   '<div class="recent-item-content">' + entry.caption + '</div></div>');
+						});
+						$.each(dataT, function(index, entry) {
+							$('#modalBody').append('<div class="recent-item search-item-2 recent-item-2" tid="' + entry.id + '"><div class="recent-item-title">' + entry.title + '</div>' +
+													   '<div class="recent-item-content">' + entry.caption + '</div></div>');
+						});
+						$.each(dataP, function(index, entry) {
+							$('#modalBody').append('<div class="recent-item search-item-3 recent-item-3" pid="' + entry.id + '"><div class="recent-item-title">' + entry.title + '</div>' +
+													   '<div class="recent-item-content">' + entry.description + '</div></div>');
+						});
+						$('.recent-item-1').click(recentPostOnClick);
+						$('.recent-item-2').click(recentTutorialOnClick);
+						$('.recent-item-3').click(recentProductOnClick);
+						if (!$('#modalBody').text()) {
+							$('#modalBody').html('<p>No results.<p>');
+						}
+						$('#searchModal').modal('show');
+					});
 				});
-				if (!$('#modalBody').text()) {
-					$('#modalBody').html('<p>No results.<p>');
-				}
-				$('#searchModal').modal('show');
 			});
 		} else {
 			alert("Invalid search query.");

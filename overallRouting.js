@@ -8,7 +8,9 @@ exports.getRouter = function() {
 	overallRouter.get('/posts', getRecentBlogEntries);
 	overallRouter.get('/tutorials', getRecentTutorialsEntries);
 	overallRouter.get('/products', getRecentProductsEntries);
-	overallRouter.get('/search/:text', getSearchResults);
+	overallRouter.get('/search/blog/:text', getBlogSearchResults);
+	overallRouter.get('/search/tutorials/:text', getTutorialsSearchResults);
+	overallRouter.get('/search/products/:text', getProductsSearchResults);
 	//post
 	overallRouter.post('/signin', signin);
 	overallRouter.post('/signout', signout);
@@ -40,28 +42,32 @@ function getRecentProductsEntries(request, response) {
 	});
 }
 
-function getSearchResults(request, response) {
+function getBlogSearchResults(request, response) {
 	var search = request.params.text;
 	db.query("SELECT * FROM project2.blog WHERE title LIKE '%" + search + "%' OR content LIKE '%" + search + 
 			 "%' OR caption LIKE '%" + search + "%' LIMIT 5", [], (errB, resB) => {
 		if (errB)
 			throw errB;
-		db.query("SELECT * FROM project2.tutorial WHERE title LIKE '%" + search + "%' OR content LIKE '%" + search + 
-			     "%' OR caption LIKE '%" + search + "%' LIMIT 5", [], (errT, resT) => {
-			if (errT)
-				throw errT;
-			db.query("SELECT * FROM project2.product WHERE title LIKE '%" + search + "%' OR description LIKE '%" + search + "%' LIMIT 5", [], (errP, resP) => {
-				if (errP)
-					throw errP;
-				for (var i = 0; i < resT.rows.length; i++) {
-					resB.rows.push(resT.rows[i]);
-				}
-				for (var i = 0; i < resP.rows.length; i++) {
-					resB.rows.push(resP.rows[i]);
-				}
-				response.json(resB.rows);
-			});
-		});
+		response.json(resB.rows);
+	});
+}
+
+function getTutorialsSearchResults(request, response) {
+	var search = request.params.text;
+	db.query("SELECT * FROM project2.tutorial WHERE title LIKE '%" + search + "%' OR content LIKE '%" + search + 
+			 "%' OR caption LIKE '%" + search + "%' LIMIT 5", [], (errT, resT) => {
+		if (errT)
+			throw errT;
+		response.json(resT.rows);
+	});
+}
+
+function getProductsSearchResults(request, response) {
+	var search = request.params.text;
+	db.query("SELECT * FROM project2.product WHERE title LIKE '%" + search + "%' OR description LIKE '%" + search + "%' LIMIT 5", [], (errP, resP) => {
+		if (errP)
+			throw errP;
+		response.json(resP.rows);
 	});
 }
 
