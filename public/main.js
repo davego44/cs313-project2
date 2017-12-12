@@ -226,7 +226,8 @@ $(function(){
 				signedIn = true;
 			}
 		}).fail(function(result) {
-			console.log(result.message);
+			alert(result.message);
+			//console.log(result.message);
 		});
 	}
 	
@@ -255,11 +256,10 @@ $(function(){
 			if (result && result.success) {
 				alert('success');
 				signedIn = true;
-			} else {
-				
 			}
 		}).fail(function(result) {
-			console.log(result.message);
+			//console.log(result.message);
+			alert(result.message);
 		});
 	}
 	

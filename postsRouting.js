@@ -10,14 +10,14 @@ exports.getRouter = function() {
 	postsRouter.get('/keywords/:keywords', getEntriesByKeyword); //get entries by keywords
 	//postsRouter.get('/recent', getRecentEntries); //get 2 recent entries
 	//put
-	postsRouter.put('/:id/:title/:author_id/:content', replaceEntry); //replace (or create) a single entry
+	//postsRouter.put('/:id/:title/:author_id/:content', replaceEntry); //replace (or create) a single entry
 	//patch
-	postsRouter.patch('/:id/:title/:author_id/:content', replaceEntry); //update a single entry
+	//postsRouter.patch('/:id/:title/:author_id/:content', replaceEntry); //update a single entry
 	//post
-	postsRouter.post('/:id/:title/:author_id/:content', replaceEntry); //add an entry
+	//postsRouter.post('/:id/:title/:author_id/:content', replaceEntry); //add an entry
 	postsRouter.post('/comment', addComment);
 	//delete
-	postsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
+	//postsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
 	return postsRouter;
 }
 	
@@ -78,7 +78,7 @@ function addComment(req, response) {
 	});
 }*/
 
-function replaceEntry(req, res) {
+/*function replaceEntry(req, res) {
 	db.query("INSERT INTO project2.blog (id, title, author_id, content) " + 
 		     "VALUES ($1,$2,$3,$4) " + 
 			 "ON CONFLICT (id) DO UPDATE SET title = $2, author_id = $3, content = $4;", 
@@ -112,4 +112,4 @@ function deleteSingleEntry(req, res) {
 		console.log(res.rows);
 	});
 	res.end();
-}
+}*/

@@ -8,16 +8,10 @@ exports.getRouter = function() {
 	tutorialsRouter.get('/', getEntireCollection); //get entire collection
 	tutorialsRouter.get('/:id', getSingleEntry); //get a single entry
 	tutorialsRouter.get('/keywords/:keywords', getEntriesByKeyword); //get entries by keywords
-	//tutorialsRouter.get('/recent', getRecentEntries); //get 2 recent entries
-	//put
-	tutorialsRouter.put('/:id/:title/:author_id/:content', replaceEntry); //replace (or create) a single entry
-	//patch
-	tutorialsRouter.patch('/:id/:title/:author_id/:content', replaceEntry); //update a single entry
 	//post
-	tutorialsRouter.post('/:id/:title/:author_id/:content', replaceEntry); //add an entry
 	tutorialsRouter.post('/diy', addDIY);
 	//delete
-	tutorialsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
+	//tutorialsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
 	return tutorialsRouter;
 }
 	
@@ -41,14 +35,6 @@ function getSingleEntry(req, response) {
 		});
 	});
 }
-
-/*function getRecentEntries(req, response) {
-	db.query('SELECT * FROM project2.tutorial ORDER BY posted DESC LIMIT 2', [], (err, res) => {
-		if (err)
-			throw err;
-		response.json(res.rows);
-	});
-}*/
 
 function getEntriesByKeyword(req, res) {
 	var arr = req.params.keywords.split(',');
@@ -90,7 +76,7 @@ function replaceEntry(req, res) {
 	res.end();
 }
 
-function deleteSingleEntry(req, res) {
+/*function deleteSingleEntry(req, res) {
 	db.query('DELETE FROM project2.diyupload WHERE tutorial_id = $1', [req.params.id], (err, res) => {
 		if (err)
 			throw err;
@@ -112,4 +98,4 @@ function deleteSingleEntry(req, res) {
 		console.log(res.rows);
 	});
 	res.end();
-}
+}*/

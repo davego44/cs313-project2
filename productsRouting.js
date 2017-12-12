@@ -9,13 +9,13 @@ exports.getRouter = function() {
 	productsRouter.get('/:id', getSingleEntry); //get a single entry
 	//productsRouter.get('/recent', getRecentEntries); //get 2 recent entries
 	//put
-	productsRouter.put('/:id/:title/:description/:cost/:count', replaceEntry); //replace (or create) a single entry
+	//productsRouter.put('/:id/:title/:description/:cost/:count', replaceEntry); //replace (or create) a single entry
 	//patch
-	productsRouter.patch('/:id/:title/:description/:cost/:count', replaceEntry); //update a single entry
+	//productsRouter.patch('/:id/:title/:description/:cost/:count', replaceEntry); //update a single entry
 	//post
-	productsRouter.post('/:id/:title/:description/:cost/:count', replaceEntry); //add an entry
+	//productsRouter.post('/:id/:title/:description/:cost/:count', replaceEntry); //add an entry
 	//delete
-	productsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
+	//productsRouter.delete('/:id', deleteSingleEntry); //delete a single entry
 	return productsRouter;
 }
 	
@@ -43,7 +43,7 @@ function getSingleEntry(req, response) {
 	});
 }*/
 
-function replaceEntry(req, res) {
+/*function replaceEntry(req, res) {
 	db.query("INSERT INTO project2.product (id, title, description, cost, count) " + 
 		     "VALUES ($1,$2,$3,$4,$5) " + 
 			 "ON CONFLICT (id) DO UPDATE SET title = $2, description = $3, cost = $4, count = $5;", 
@@ -62,4 +62,4 @@ function deleteSingleEntry(req, res) {
 		console.log(res.rows);
 	});
 	res.end();
-}
+}*/
